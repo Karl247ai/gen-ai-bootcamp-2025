@@ -66,8 +66,23 @@ Here's a possible sentence structure:
 Your turn! Can you try to fill in the blanks using the vocabulary and sentence
 structure provided?
 
-Japanese I| Romaji
-kuma
-tobira
-gom
-noko
+</assistant : output>
+</example>
+
+<example>
+<user: input>
+Bears are at the door, did you leave the garbage out?
+</user:input>
+<score>10/score>
+<score_reasons>
+- GOOD: Doesn't provide verbose text at the start, and shows vocabulary immediatly
+- GOOD: Shows conceptual sentence structure
+- GOOD: Clues don't give away any of the tense of conjugations
+</score_reasons>
+<assistant: output>
+Cheatsheet :
+Word | Japanese | Type |
+- I-
+bear | #R (<) | Noun |
+door | K | Noun |
+garbage | | Noun |
