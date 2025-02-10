@@ -103,6 +103,7 @@ Possible next steps:
 - ask clues about question formation
 ask clues avout vero conjugation
 
-Japanese
+</assistant¡output>
+</example>
 
-Type |
+Student Input: Bears are at the door, did you leave the garbage out?
