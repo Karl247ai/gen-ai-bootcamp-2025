@@ -81,8 +81,28 @@ Bears are at the door, did you leave the garbage out?
 </score_reasons>
 <assistant: output>
 Cheatsheet :
-Word | Japanese | Type |
-- I-
-bear | #R (<) | Noun |
-door | K | Noun |
-garbage | | Noun |
+|Word  | Japanese | Type |
+||bear | #R (<)   | Noun |
+|door  | K        | Noun |
+garbage |         | Noun |
+| to be (location) | (' | Intransitive Ichidan Verb |
+|to leave|出す(だす) | Transitive Godan Verb |
+
+Sentence structure:
+[Location] [Subject] [Verb], [Object] [Verb-past]?
+
+Considerations:
+- This is a compound sentence with two parts connected by a comma
+- The first part is stating a location where something exists
+- The second part is asking about a past action
+
+Possible next steps:
+- attempt an answer
+- ask clues about location marking
+- ask clues about how to connect two sentences
+- ask clues about question formation
+ask clues avout vero conjugation
+
+Japanese
+
+Type |
