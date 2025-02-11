@@ -73,23 +73,12 @@ Here is an example of simple sentence structures.
 - talk about the vocabulary but try to leave out the japanese words because the student
 can refer to the vocabulary table.
 
+## Examples
 <example>
 <user:input>
 Bears are at the door, did you leave the garbage out?
 </user: input>
-<score>4</score>
-<score reasons>
-
-## Examples
-
-Here are examples of user input and assitant output, pay attention to the score because
-and why the example is scored the way it is.
-
-<example>
-<user: input>
-Bears are at the door, did you leave the garbage out?
-</user:input>
-<score>4</score>
+<score>4</score>I
 <score_reasons>
 - BAD: in the vocabulary table it did not show the japanese characters, the cells are
 just blank
@@ -97,24 +86,24 @@ just blank
 table
 - BAD: In the clues we should not provide the polite form of verbs, because the
 student needs to figure that out.
-- BAD: The sentence structure says too much we really want something that i
+- BAD: The sentence structure says too much we really want something that is
 conceptual like this: [Location] [Subject] [Verb], [Object] [Verb-past]?
 </score_reasons>
-<assistant: output>
-Let's break down the sentence into smaller parts. Here's a possible table o
+<assistant: outbut>
+Let's break down the sentence into smaller parts. Here's a possible table of
 vocabulary to get you started:
 
-| Japanese  | Romaji | English
-|           | kuma   | bear  |
-|           | tobira | door  |
-|           | gomi   |garbage|
-|           | noko   |leave behind |
+|Japanese   |Romaji  |English   |
+|           |kuma    |bear      |
+|           |tobira  |door      |
+|           |gomi    |garbage   |
+|           |noko    |leave behind|
 
 Now, let's think about the sentence structure. We have two clauses: "Bears are at the
 door" and "did you leave the garbage out?".
 For the first clause, we can use the verb (aru) which means "to exist" or "to be
 present". We'll need to figure out the correct form of the verb to use.
-For the second clause, we can use the verb (nokosu) which is a more polite way of
+For the secohd clause, we can use the verb (nokosu) which is a more polite way of
 saying "to leave behind". Again, we'll need to figure out the correct form of the verb
 to use.
 
@@ -127,65 +116,53 @@ Here's a possible sentence structure:
 
 Your turn! Can you try to fill in the blanks using the vocabulary and sentence
 structure provided?
-
 </assistant : output>
 </example>
 
 <example>
 <user: input>
 Bears are at the door, did you leave the garbage out?
-</user:input>
+</user:input
 <score>10/score>
 <score_reasons>
-- GOOD: Doesn't provide verbose text at the start, and shows vocabulary immediatly
-- GOOD: Shows conceptual sentence structure
+- GOOD: Doesn't provide verbose text at the start, and shows vocabulary immidiately
+- GOOD: Shows conceptual sentence strucutre
 - GOOD: Clues don't give away any of the tense of conjugations
-</score_reasons>
-<assistant: output>
-Cheatsheet :
-|Word  | Japanese | Type |
-||bear | #R (<)   | Noun |
-|door  | K        | Noun |
-garbage |         | Noun |
-| to be (location) | (' | Intransitive Ichidan Verb |
-|to leave|出す(だす) | Transitive Godan Verb |
+< /score_reasons>
+ <assistant: output>
 
-Sentence structure:
+Cheatsheet:
+| Word     | Japanese   | Type    |
+| bear     | |熊(くま)  |Noun    |
+| door     | KP         |Noun |
+| garbage  |            | Noun |
+| to be (location) | (3 | Intransitive Ichidan Verb |
+|to leave  |出す(だす)   | Transitive ·Godan ·Verb·|
+
+Sentence structure.
+
+|-Noun |
+| door | Ny | .Noun |
+| garbage | | Noun |
+| to be (location) | (13 | Intransitive Ichidan Verb
+| to leave | () | Transitive Godan Verb
+
+Sentence structure :
 [Location] [Subject] [Verb], [Object] [Verb-past]?
 
 Considerations:
 - This is a compound sentence with two parts connected by a comma
 - The first part is stating a location where something exists
-- The second part is asking about a past action
+The second part is asking about a past action
 
-Possible next steps:
-- attempt an answer
+Possible next steps :
+attempt an answer
 - ask clues about location marking
 - ask clues about how to connect two sentences
 - ask clues about question formation
-ask clues avout vero conjugation
-
-</assistant¡output>
+ask clues about verb conjugation
+</assistant : output>
 </example>
 
-Student Input: Bears are at the door, did you leave the garbage out?
+Student Input: Did you see the raven this morning? They were looking at our garden.
 
-## Here is the result from testing the initial prompt, taken directly from Meta AI's prompt.
-# Begin of the result
-Here's your vocabulary table to help you build the sentence:
-
-|Japanese |	Romaji | English |
-| 熊	  | kuma   | bear    |
-| 扉      |	tobira | door    |
-|ゴミ     | gomi   | garbage |
-| いる    |	iru	   | to take out / leave out
-
-Sentence Structure:
-[Location] [Subject] [Verb], [Object] [Verb-past]?
-
-Considerations:
-The first clause describes the location of something that exists (a living thing).
-The second clause is a question asking about a past action.
-Think about how to mark the location and subject correctly.
-Consider how to form a yes/no question in Japanese.
-# End of the result
