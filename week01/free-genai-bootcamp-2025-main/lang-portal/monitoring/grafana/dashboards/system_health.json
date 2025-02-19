@@ -1,0 +1,113 @@
+{
+  "title": "System Health Overview",
+  "uid": "system-health",
+  "version": 1,
+  "panels": [
+    {
+      "title": "System Load",
+      "type": "gauge",
+      "gridPos": {"x": 0, "y": 0, "w": 8, "h": 8},
+      "targets": [
+        {
+          "expr": "avg(rate(process_cpu_seconds_total[5m]) * 100)",
+          "legendFormat": "CPU Usage %"
+        }
+      ],
+      "options": {
+        "thresholds": {
+          "steps": [
+            { "value": null, "color": "green" },
+            { "value": 70, "color": "yellow" },
+            { "value": 85, "color": "red" }
+          ]
+        }
+      }
+    },
+    {
+      "title": "Memory Usage",
+      "type": "gauge",
+      "gridPos": {"x": 8, "y": 0, "w": 8, "h": 8},
+      "targets": [
+        {
+          "expr": "process_resident_memory_bytes / process_virtual_memory_bytes * 100",
+          "legendFormat": "Memory Usage %"
+        }
+      ],
+      "options": {
+        "thresholds": {
+          "steps": [
+            { "value": null, "color": "green" },
+            { "value": 75, "color": "yellow" },
+            { "value": 90, "color": "red" }
+          ]
+        }
+      }
+    },
+    {
+      "title": "Goroutine Count",
+      "type": "stat",
+      "gridPos": {"x": 16, "y": 0, "w": 8, "h": 8},
+      "targets": [
+        {
+          "expr": "go_goroutines",
+          "legendFormat": "Active Goroutines"
+        }
+      ]
+    },
+    {
+      "title": "Service Health Status",
+      "type": "status-history",
+      "gridPos": {"x": 0, "y": 8, "w": 24, "h": 6},
+      "targets": [
+        {
+          "expr": "up",
+          "legendFormat": "{{job}}"
+        }
+      ]
+    },
+    {
+      "title": "Database Connections",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 14, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "db_connections_in_use",
+          "legendFormat": "Active Connections"
+        },
+        {
+          "expr": "db_connections_idle",
+          "legendFormat": "Idle Connections"
+        }
+      ]
+    },
+    {
+      "title": "Cache Performance",
+      "type": "timeseries",
+      "gridPos": {"x": 12, "y": 14, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "rate(cache_get_hit_total[5m])",
+          "legendFormat": "Cache Hits"
+        },
+        {
+          "expr": "rate(cache_get_miss_total[5m])",
+          "legendFormat": "Cache Misses"
+        }
+      ]
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": ["system", "health"],
+  "templating": {
+    "list": [
+      {
+        "name": "instance",
+        "type": "query",
+        "query": "label_values(up, instance)",
+        "refresh": 2
+      }
+    ]
+  }
+} 

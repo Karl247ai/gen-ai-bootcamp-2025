@@ -1,0 +1,18 @@
+groups:
+  - name: application
+    rules:
+      - alert: HighLatency
+        expr: handler_request_duration_seconds > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          description: "High latency detected"
+
+      - alert: HighErrorRate
+        expr: rate(handler_error_count[5m]) / rate(handler_request_count[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          description: "High error rate detected" 

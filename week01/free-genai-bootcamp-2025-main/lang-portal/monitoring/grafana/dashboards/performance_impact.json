@@ -1,0 +1,62 @@
+{
+  "title": "Performance Impact Analysis",
+  "uid": "performance-impact",
+  "version": 1,
+  "panels": [
+    {
+      "title": "Response Time During Maintenance",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 0, "w": 24, "h": 8},
+      "targets": [
+        {
+          "expr": "rate(http_request_duration_seconds_sum{maintenance='true'}[5m]) / rate(http_request_duration_seconds_count{maintenance='true'}[5m])",
+          "legendFormat": "During Maintenance"
+        },
+        {
+          "expr": "rate(http_request_duration_seconds_sum{maintenance!='true'}[5m]) / rate(http_request_duration_seconds_count{maintenance!='true'}[5m])",
+          "legendFormat": "Normal Operation"
+        }
+      ]
+    },
+    {
+      "title": "Error Rate Comparison",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "rate(http_errors_total{maintenance='true'}[5m])",
+          "legendFormat": "During Maintenance"
+        },
+        {
+          "expr": "rate(http_errors_total{maintenance!='true'}[5m])",
+          "legendFormat": "Normal Operation"
+        }
+      ]
+    },
+    {
+      "title": "Resource Usage",
+      "type": "timeseries",
+      "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "process_cpu_seconds_total{maintenance='true'}",
+          "legendFormat": "CPU Usage"
+        },
+        {
+          "expr": "process_resident_memory_bytes{maintenance='true'} / 1024 / 1024",
+          "legendFormat": "Memory Usage (MB)"
+        }
+      ]
+    }
+  ],
+  "templating": {
+    "list": [
+      {
+        "name": "maintenance_id",
+        "type": "query",
+        "query": "label_values(maintenance_total, id)",
+        "refresh": 2
+      }
+    ]
+  }
+} 

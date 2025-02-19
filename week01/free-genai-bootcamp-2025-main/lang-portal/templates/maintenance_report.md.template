@@ -1,0 +1,56 @@
+# Maintenance Report - {{MONTH}}
+
+## Overview
+
+- Report Period: {{MONTH}}
+- Generated: {{TIMESTAMP}}
+- Total Activities: {{TOTAL_ACTIVITIES}}
+
+## Summary
+
+### Activity Types
+{{ACTIVITY_SUMMARY}}
+
+### Key Metrics
+- Planned Maintenance: {{PLANNED_COUNT}}
+- Emergency Maintenance: {{EMERGENCY_COUNT}}
+- Average Duration: {{AVG_DURATION}}
+- Total Downtime: {{TOTAL_DOWNTIME}}
+
+## Detailed Activities
+
+{{ACTIVITIES}}
+
+## Performance Impact
+
+### Before vs After
+{{PERFORMANCE_COMPARISON}}
+
+### Incidents
+{{INCIDENT_SUMMARY}}
+
+## Recommendations
+
+### Process Improvements
+{{PROCESS_RECOMMENDATIONS}}
+
+### System Upgrades
+{{UPGRADE_RECOMMENDATIONS}}
+
+## Next Month Planning
+
+### Scheduled Maintenance
+{{SCHEDULED_MAINTENANCE}}
+
+### Pending Updates
+{{PENDING_UPDATES}}
+
+## Appendix
+
+### Tools and Resources
+- Monitoring Dashboard: http://grafana:3000
+- Alert History: http://alertmanager:9093
+- Metrics: http://prometheus:9090
+
+### Related Documents
+{{RELATED_DOCS}} 

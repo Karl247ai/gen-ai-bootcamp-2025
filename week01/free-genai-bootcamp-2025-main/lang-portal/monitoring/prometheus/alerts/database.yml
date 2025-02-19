@@ -1,0 +1,35 @@
+groups:
+  - name: database
+    rules:
+      - alert: DatabaseConnectionsSaturated
+        expr: |
+          db_connections_in_use / db_connections_max > 0.9
+        for: 5m
+        labels:
+          severity: critical
+          category: database
+        annotations:
+          summary: Database connections near capacity
+          description: Connection pool is {{ $value | humanizePercentage }} saturated
+
+      - alert: SlowQueries
+        expr: |
+          rate(db_slow_queries_total[5m]) > 0
+        for: 5m
+        labels:
+          severity: warning
+          category: database
+        annotations:
+          summary: Slow queries detected
+          description: {{ $value }} slow queries in the last 5 minutes
+
+      - alert: HighQueryErrors
+        expr: |
+          rate(db_query_errors_total[5m]) > 0.01
+        for: 5m
+        labels:
+          severity: critical
+          category: database
+        annotations:
+          summary: High database error rate
+          description: Query error rate is {{ $value | humanizePercentage }} 

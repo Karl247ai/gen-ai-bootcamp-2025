@@ -1,0 +1,52 @@
+groups:
+  - name: system_health
+    rules:
+      - alert: HighSystemLoad
+        expr: avg(rate(process_cpu_seconds_total[5m]) * 100) > 85
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "High system load detected"
+          description: "System load is above 85% for 5 minutes"
+
+      - alert: MemoryExhaustion
+        expr: process_resident_memory_bytes / process_virtual_memory_bytes * 100 > 90
+        for: 5m
+        labels:
+          severity: critical
+          team: operations
+        annotations:
+          summary: "Memory usage critical"
+          description: "Memory usage is above 90%"
+
+      - alert: HighGoroutineCount
+        expr: go_goroutines > 10000
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "High goroutine count"
+          description: "Number of goroutines exceeds 10000"
+
+      - alert: DatabaseConnectionsSaturated
+        expr: db_connections_in_use / db_connections_max * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "Database connections near capacity"
+          description: "Over 80% of database connections are in use"
+
+      - alert: LowCacheHitRate
+        expr: rate(cache_get_hit_total[5m]) / (rate(cache_get_hit_total[5m]) + rate(cache_get_miss_total[5m])) < 0.8
+        for: 15m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "Low cache hit rate"
+          description: "Cache hit rate is below 80% for 15 minutes" 

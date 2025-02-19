@@ -1,0 +1,102 @@
+{
+  "title": "Database Performance",
+  "panels": [
+    {
+      "title": "Connection Pool Usage",
+      "type": "gauge",
+      "targets": [
+        {
+          "expr": "db_connections_in_use / db_connections_total"
+        }
+      ],
+      "thresholds": [
+        {
+          "value": 0.7,
+          "color": "yellow"
+        },
+        {
+          "value": 0.85,
+          "color": "red"
+        }
+      ]
+    },
+    {
+      "title": "Query Duration",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(db_query_duration_seconds_bucket[5m]))",
+          "legendFormat": "p95"
+        },
+        {
+          "expr": "histogram_quantile(0.50, rate(db_query_duration_seconds_bucket[5m]))",
+          "legendFormat": "p50"
+        }
+      ]
+    },
+    {
+      "title": "Query Errors",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(db_query_errors_total[5m])"
+        }
+      ]
+    },
+    {
+      "title": "Connection Wait Time",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(db_connection_wait_duration_seconds_sum[5m]) / rate(db_connection_wait_duration_seconds_count[5m])"
+        }
+      ]
+    },
+    {
+      "title": "Query Types Distribution",
+      "type": "pie",
+      "targets": [
+        {
+          "expr": "sum(rate(db_queries_total[5m])) by (type)"
+        }
+      ]
+    },
+    {
+      "title": "Slow Queries",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(db_slow_queries_total[5m])"
+        }
+      ]
+    },
+    {
+      "title": "Connection Timeouts",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(db_connection_timeouts_total[5m])"
+        }
+      ]
+    },
+    {
+      "title": "Query Type Ratios",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "sum(rate(db_queries_total{type=~\"insert|update|delete\"}[5m])) / sum(rate(db_queries_total{type=\"select\"}[5m]))",
+          "legendFormat": "write/read ratio"
+        }
+      ]
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 16,
+  "version": 1,
+  "links": [
+    {
+      "title": "Database Runbooks",
+      "url": "/docs/runbooks/database"
+    }
+  ]
+} 

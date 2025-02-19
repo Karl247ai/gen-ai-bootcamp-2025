@@ -1,0 +1,140 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 0,
+  "panels": [
+    {
+      "title": "Request Rate by Endpoint",
+      "type": "timeseries",
+      "targets": [
+        {
+          "expr": "sum(rate(handler_request_count[5m])) by (handler)",
+          "legendFormat": "{{handler}}"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0}
+    },
+    {
+      "title": "Response Time Distribution",
+      "type": "heatmap",
+      "targets": [
+        {
+          "expr": "sum(rate(handler_request_duration_bucket[5m])) by (le)",
+          "format": "heatmap"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0}
+    },
+    {
+      "title": "Error Rate",
+      "type": "gauge",
+      "targets": [
+        {
+          "expr": "sum(rate(handler_error_count[5m])) / sum(rate(handler_request_count[5m])) * 100",
+          "legendFormat": "Error %"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 8, "x": 0, "y": 8},
+      "options": {
+        "thresholds": [
+          { "color": "green", "value": null },
+          { "color": "yellow", "value": 0.1 },
+          { "color": "red", "value": 1 }
+        ]
+      }
+    },
+    {
+      "title": "Database Connections",
+      "type": "stat",
+      "targets": [
+        {
+          "expr": "db_connections_in_use",
+          "legendFormat": "In Use"
+        },
+        {
+          "expr": "db_connections_idle",
+          "legendFormat": "Idle"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 8, "x": 8, "y": 8}
+    },
+    {
+      "title": "Memory Usage",
+      "type": "gauge",
+      "targets": [
+        {
+          "expr": "process_resident_memory_bytes / 1024 / 1024",
+          "legendFormat": "MB"
+        }
+      ],
+      "gridPos": {"h": 8, "w": 8, "x": 16, "y": 8}
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 38,
+  "style": "dark",
+  "title": "API Performance Dashboard",
+  "version": 1,
+  "dashboard": {
+    "title": "API Performance",
+    "uid": "api-performance",
+    "panels": [
+      {
+        "title": "Request Rate",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(handler_request_count{job=\"lang-portal\"}[5m])",
+            "legendFormat": "{{path}} - {{method}}"
+          }
+        ]
+      },
+      {
+        "title": "Response Times (p95)",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(handler_request_duration_bucket{job=\"lang-portal\"}[5m]))",
+            "legendFormat": "{{path}} - {{method}}"
+          }
+        ]
+      },
+      {
+        "title": "Error Rate",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(handler_error_count{job=\"lang-portal\"}[5m])",
+            "legendFormat": "{{path}} - {{error_type}}"
+          }
+        ]
+      },
+      {
+        "title": "Cache Performance",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(cache_get_hit{job=\"lang-portal\"}[5m])",
+            "legendFormat": "Cache Hits"
+          },
+          {
+            "expr": "rate(cache_get_miss{job=\"lang-portal\"}[5m])",
+            "legendFormat": "Cache Misses"
+          }
+        ]
+      }
+    ],
+    "refresh": "10s",
+    "schemaVersion": 30,
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    }
+  }
+} 

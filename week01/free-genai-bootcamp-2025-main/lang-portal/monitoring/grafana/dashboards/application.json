@@ -1,0 +1,23 @@
+{
+  "title": "Application Overview",
+  "panels": [
+    {
+      "title": "Request Rate",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(handler_request_count[5m])"
+        }
+      ]
+    },
+    {
+      "title": "Error Rate",
+      "type": "graph",
+      "targets": [
+        {
+          "expr": "rate(handler_error_count[5m])"
+        }
+      ]
+    }
+  ]
+} 

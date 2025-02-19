@@ -1,0 +1,95 @@
+monitoring:
+  metrics:
+    enabled: true
+    path: /metrics
+    namespace: lang_portal
+    subsystem: api
+    labels:
+      - handler
+      - method
+      - status_code
+      - error_type
+
+  resource:
+    enabled: true
+    interval: 15s
+    memory_threshold: 85
+    goroutine_threshold: 10000
+    disk_threshold: 90
+    cpu_threshold: 80
+
+  rate_limit:
+    enabled: true
+    requests_per_minute: 1000
+    window: 60s
+    cleanup_interval: 300s
+    exempted_paths:
+      - /health
+      - /metrics
+
+  cache:
+    enabled: true
+    metrics:
+      hit_rate_threshold: 0.8
+      error_rate_threshold: 0.01
+      latency_threshold: 50ms
+
+  tracing:
+    enabled: true
+    sampling_rate: 0.1
+    agent_endpoint: localhost:6831
+
+  health:
+    enabled: true
+    path: /health
+    interval: 30s
+    timeout: 5s
+    checks:
+      - name: database
+        timeout: 5s
+      - name: cache
+        timeout: 2s
+      - name: disk
+        threshold: 90
+      - name: memory
+        threshold: 85
+
+  alerts:
+    slack:
+      webhook_url: ${SLACK_WEBHOOK_URL}
+      channel: "#alerts"
+      min_interval: 5m
+      levels:
+        critical:
+          min_interval: 1m
+        warning:
+          min_interval: 15m
+    email:
+      enabled: true
+      from: alerts@lang-portal.com
+      to: oncall@lang-portal.com
+      smtp:
+        host: smtp.company.com
+        port: 587
+        username: ${SMTP_USERNAME}
+        password: ${SMTP_PASSWORD}
+
+  debug:
+    enabled: true
+    admin_token: ${ADMIN_TOKEN}
+    endpoints:
+      - path: /debug/db/stats
+        auth_required: true
+      - path: /debug/cache/stats
+        auth_required: true
+      - path: /debug/metrics/reset
+        auth_required: true
+      - path: /debug/goroutines
+        auth_required: true
+
+  retention:
+    metrics_retention_days: 30
+    logs_retention_days: 90
+    traces_retention_days: 7
+    dashboard_snapshots_enabled: true
+    dashboard_snapshots_retention: 365 

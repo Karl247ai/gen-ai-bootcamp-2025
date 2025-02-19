@@ -1,0 +1,49 @@
+groups:
+  - name: performance_impact
+    rules:
+      - alert: HighLatencyDuringMaintenance
+        expr: |
+          (
+            rate(http_request_duration_seconds_sum{maintenance="true"}[5m])
+            /
+            rate(http_request_duration_seconds_count{maintenance="true"}[5m])
+          )
+          > 2 * (
+            rate(http_request_duration_seconds_sum{maintenance!="true"}[5m])
+            /
+            rate(http_request_duration_seconds_count{maintenance!="true"}[5m])
+          )
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "High latency during maintenance"
+          description: "Response time is 2x higher than normal during maintenance"
+
+      - alert: IncreasedErrorRateDuringMaintenance
+        expr: |
+          rate(http_errors_total{maintenance="true"}[5m])
+          > 3 * rate(http_errors_total{maintenance!="true"}[5m])
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "Increased error rate during maintenance"
+          description: "Error rate is 3x higher than normal during maintenance"
+
+      - alert: ResourceExhaustionDuringMaintenance
+        expr: |
+          (
+            process_resident_memory_bytes{maintenance="true"}
+            /
+            process_resident_memory_bytes{maintenance!="true"}
+          ) > 1.5
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "High resource usage during maintenance"
+          description: "Memory usage is 50% higher than normal during maintenance" 

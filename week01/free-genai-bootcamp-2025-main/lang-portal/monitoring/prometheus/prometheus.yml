@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "rules/*.yml"
+
+scrape_configs:
+  - job_name: 'lang-portal'
+    static_configs:
+      - targets: ['localhost:8080']
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['localhost:9093'] 

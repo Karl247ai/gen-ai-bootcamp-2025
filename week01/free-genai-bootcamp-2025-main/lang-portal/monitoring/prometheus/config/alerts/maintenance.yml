@@ -1,0 +1,46 @@
+groups:
+  - name: maintenance
+    rules:
+      - alert: MaintenanceError
+        expr: increase(maintenance_errors_total[1h]) > 0
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "Maintenance errors detected"
+          description: "{{ $value }} maintenance errors in the last hour"
+
+      - alert: LongMaintenance
+        expr: maintenance_duration_seconds > 7200  # 2 hours
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "Maintenance taking longer than expected"
+          description: "Maintenance has been running for {{ $value }} seconds"
+
+      - alert: HighMaintenanceImpact
+        expr: |
+          rate(http_request_duration_seconds_sum[5m]) 
+          / 
+          rate(http_request_duration_seconds_count[5m]) 
+          > 
+          0.5
+        for: 5m
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "High performance impact during maintenance"
+          description: "Response time increased by {{ $value }}s during maintenance"
+
+      - alert: FrequentMaintenance
+        expr: count_over_time(maintenance_total[24h]) > 3
+        labels:
+          severity: warning
+          team: operations
+        annotations:
+          summary: "Frequent maintenance detected"
+          description: "More than 3 maintenance activities in 24 hours" 

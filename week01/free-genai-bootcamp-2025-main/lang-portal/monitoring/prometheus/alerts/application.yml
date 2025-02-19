@@ -1,0 +1,62 @@
+groups:
+  - name: application
+    rules:
+      - alert: HighMemoryUsage
+        expr: |
+          process_resident_memory_bytes / process_memory_max_bytes > 0.85
+        for: 5m
+        labels:
+          severity: warning
+          category: resource
+        annotations:
+          summary: High memory usage
+          description: Memory usage at {{ $value | humanizePercentage }}
+
+      - alert: HighCPUUsage
+        expr: |
+          rate(process_cpu_seconds_total[5m]) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+          category: resource
+        annotations:
+          summary: High CPU usage
+          description: CPU usage at {{ $value | humanizePercentage }}
+
+      - alert: HighGoroutineCount
+        expr: |
+          go_goroutines > 10000
+        for: 5m
+        labels:
+          severity: warning
+          category: resource
+        annotations:
+          summary: High goroutine count
+          description: {{ $value }} goroutines running
+
+      - alert: HighErrorRate
+        expr: rate(handler_error_count{job="lang-portal"}[5m]) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: High error rate detected
+          description: Error rate is above 5% for the last 5 minutes
+
+      - alert: SlowResponses
+        expr: histogram_quantile(0.95, rate(handler_request_duration_bucket{job="lang-portal"}[5m])) > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: Slow response times detected
+          description: 95th percentile of response times is above 500ms
+
+      - alert: HighRequestRate
+        expr: sum(rate(handler_request_count{job="lang-portal"}[5m])) > 1000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: High request rate detected
+          description: Request rate is above 1000 requests per second 
