@@ -1,0 +1,166 @@
+basePath: /api/v1
+definitions:
+  models.ErrorResponse:
+    properties:
+      error:
+        example: error message
+        type: string
+    type: object
+  models.PaginatedResponse:
+    properties:
+      data: {}
+      pagination:
+        $ref: '#/definitions/models.PaginationMeta'
+    type: object
+  models.PaginationMeta:
+    properties:
+      current_page:
+        type: integer
+      items_per_page:
+        type: integer
+      total_items:
+        type: integer
+      total_pages:
+        type: integer
+    type: object
+  models.Word:
+    type: object
+  models.WordResponse:
+    properties:
+      data:
+        $ref: '#/definitions/models.Word'
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: A language learning portal API
+  title: Language Portal API
+  version: "1.0"
+paths:
+  /words:
+    get:
+      consumes:
+      - application/json
+      description: Get paginated list of words
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PaginatedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get words list
+      tags:
+      - words
+    post:
+      consumes:
+      - application/json
+      description: Add a new word to the vocabulary
+      parameters:
+      - description: Word object
+        in: body
+        name: word
+        required: true
+        schema:
+          $ref: '#/definitions/models.Word'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.WordResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Create new word
+      tags:
+      - words
+  /words/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an existing word
+      parameters:
+      - description: Word ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Delete word
+      tags:
+      - words
+    put:
+      consumes:
+      - application/json
+      description: Update an existing word
+      parameters:
+      - description: Word ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Word object
+        in: body
+        name: word
+        required: true
+        schema:
+          $ref: '#/definitions/models.Word'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.WordResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Update word
+      tags:
+      - words
+swagger: "2.0"
